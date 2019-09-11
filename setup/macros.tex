@@ -1,0 +1,135 @@
+% see, e.g., http://en.wikibooks.org/wiki/LaTeX/Customizing_LaTeX#New_commands
+% for more information on how to create macros
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Macros for the titlepage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Creates the ucn titlepage
+\newcommand{\ucntitlepage}[3]{%
+  {
+    %set up various length
+    \ifx\titlepageleftcolumnwidth\undefined
+      \newlength{\titlepageleftcolumnwidth}
+      \newlength{\titlepagerightcolumnwidth}
+    \fi
+    \setlength{\titlepageleftcolumnwidth}{0.8\textwidth-\tabcolsep}
+    \setlength{\titlepagerightcolumnwidth}{\textwidth-2\tabcolsep-\titlepageleftcolumnwidth}
+    %create title page
+    \thispagestyle{empty}
+    \noindent%
+    \begin{tabular}{@{}ll@{}}
+      \parbox{\titlepageleftcolumnwidth}{ 
+        \iflanguage{danish}{%
+          \includegraphics[width=\titlepageleftcolumnwidth]{figures/Logo/UCN-Logo}
+        }{%
+          \includegraphics[width=\titlepageleftcolumnwidth]{figures/Logo/UCN-Logo}
+        }
+      } &
+      \parbox{\titlepagerightcolumnwidth}{\raggedleft\sf\small
+        #2
+      }\bigskip\\
+       #1 &
+      \parbox[t]{\titlepagerightcolumnwidth}{%
+      %\textbf{Abstract:}\bigskip\par
+        \parbox{\titlepagerightcolumnwidth-2\fboxsep-2\fboxrule}{%
+          #3
+        }
+      }\\
+    \end{tabular}
+    \vfill
+    \clearpage
+  }
+}
+
+%Create english project info
+\newcommand{\englishprojectinfo}[8]{%
+  \parbox[t]{\titlepageleftcolumnwidth}{
+    \textbf{Title:}\\ #1\bigskip\par
+    \textbf{Theme:}\\ #2\bigskip\par
+    \textbf{Project Period:}\\ #3\bigskip\par
+    \textbf{Project Group:}\\ #4\bigskip\par
+    \textbf{Participant(s):}\\ #5\bigskip\par
+    \textbf{Supervisor(s):}\\ #6\bigskip\par
+    \textbf{Copies:} #7\bigskip\par
+    \textbf{Page Numbers:} \pageref{LastPage}\bigskip\par
+    \textbf{Date of Completion:}\\ #8
+  }
+}
+
+%Create danish project info
+\newcommand{\danishprojectinfo}[8]{%
+  \parbox[t]{\titlepageleftcolumnwidth}{
+    \textbf{Titel:}\\ #1\bigskip\par
+    \textbf{Projektperiode:}\\ #2\bigskip\par
+    \textbf{Projektgruppe:}\\ #3\bigskip\par
+    \textbf{Deltagere:}\\ #4\bigskip\par
+    \textbf{Vejleder:}\\ #5\bigskip\par
+    \textbf{Normalsider:}\\ #6\bigskip\par
+    \textbf{Repository:}\\ #7\bigskip\par
+    \textbf{Afleveringsdato:}\\ #8
+  }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% An example environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremheaderfont{\normalfont\bfseries}
+\theorembodyfont{\normalfont}
+\theoremstyle{break}
+\def\theoremframecommand{{\color{gray!50}\vrule width 5pt \hspace{5pt}}}
+\newshadedtheorem{exa}{Example}[chapter]
+\newenvironment{example}[1]{%
+		\begin{exa}[#1]
+}{%
+		\end{exa}
+}
+
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
+
+\newcommand{\fig}[3][]{
+\begin{figure}[H]
+\begin{center}
+  \ifthenelse{\equal{#1}{}}
+  {\includegraphics[keepaspectratio=true,width=\textwidth]{figures/#2}}
+  {\includegraphics[keepaspectratio=true,scale=#1]{figures/#2}}
+  
+  \caption{#3}
+  \label{#2}
+\end{center}
+\end{figure}
+}
+
+% Used in frontpage. Please don't use elsewhere.
+\newcommand{\figx}[2][0.5]{
+\begin{figure}[H]
+\begin{center}
+  \includegraphics[keepaspectratio=true,scale=#1]{figures/#2}
+\end{center}
+\end{figure}
+}
+
+\newcommand{\figr}[2]{
+\begin{wrapfigure}{r}{0.4\textwidth}
+\begin{center}
+  \includegraphics[keepaspectratio=true,width=0.4\textwidth]{figures/#1}
+  \caption{#2}
+  \label{#1}
+\end{center}
+\end{wrapfigure}
+}
+
+\newcommand{\inputS}[1]{
+  \input{sections/#1.tex}
+}
+
+\newcommand{\tofix}[1]{
+  \todo[linecolor=red, backgroundcolor=red]{#1}
+}
+
+\newcommand{\worry}[1]{
+  \todo[linecolor=yellow, backgroundcolor=yellow]{#1}
+}
+
+\newcommand{\toread}[1]{
+  \todo[linecolor=blue, backgroundcolor=blue]{#1}
+}
